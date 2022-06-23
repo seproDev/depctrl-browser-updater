@@ -1,0 +1,13 @@
+name = "depctrl-browser-updater"
+main = "src/index.js"
+compatibility_date = "2022-06-23"
+
+[triggers]
+crons = [ "*/5 * * * *" ]
+
+[durable_objects]
+bindings = [{name = "FEEDUPDATED", class_name = "FeedUpdated"}]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["FeedUpdated"]
