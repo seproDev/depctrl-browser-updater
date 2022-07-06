@@ -9,9 +9,11 @@ const feeds = [
   "TypesettingTools/lyger-Aegisub-Scripts/master",
   "TypesettingTools/Myaamori-Aegisub-Scripts/master",
   "petzku/Aegisub-Scripts/master",
+  "petzku/Aegisub-Scripts/stable", // not in depctrl, but added by macros
   "PhosCity/Aegisub-Scripts/main",
   "TypesettingTools/SubInspector/master",
   "TypesettingTools/unanimated-Aegisub-Scripts/master",
+  "unanimated/luaegisub/master", // not in depctrl, but added by macros
   "Zahuczky/Zahuczkys-Aegisub-Scripts/main",
 ];
 
