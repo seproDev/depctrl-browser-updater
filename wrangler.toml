@@ -1,0 +1,13 @@
+name = "depctrl-browser-updater"
+main = "src/index.js"
+compatibility_date = "2022-06-23"
+
+kv_namespaces = [
+  { binding = "KVSTORAGE", id = "a0b8d2d007dd416daeee474194b24a03", preview_id = "ab1f9ca2d162490798390fc3583ea803" }
+]
+
+[triggers]
+crons = [ "*/5 * * * *" ]
+
+# There exists a secret for GH_API_TOKEN
+# Add with `wrangler secret put GH_API_TOKEN <TOKEN>`
