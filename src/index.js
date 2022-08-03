@@ -44,7 +44,8 @@ const rebuildSite = async (env) => {
     method: "post", 
     headers: new Headers({
         "Authorization": "token " + env.GH_API_TOKEN, 
-        "Accept": "application/vnd.github+json"
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "DepCtrl Browser Update Trigger on CF Worker"
     }), 
     body: '{"event_type":"feed-update-detected"}'
 });
