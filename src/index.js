@@ -22,7 +22,15 @@ const getLastUpdated = async (feed) => {
   const url = `https://github.com/${owner}/${repo}/commits/${branch}/DependencyControl.json.atom`;
   console.log("Fetching repo " + feed);
   return fetch(url)
-    .then((response) => response.text())
+    .then((response) => {
+      if (!response.ok) {
+        const err = new Error("Not 2xx response");
+        err.response = response;
+        throw err;
+      } else {
+        return response.text()
+      }
+    })
     .then((text) => text.slice(text.indexOf("<updated>") + 9, text.indexOf("</updated>")));
 }
 
@@ -40,15 +48,15 @@ const updateFeedTime = async (feed, updateTime, env) => {
 
 const rebuildSite = async (env) => {
   // Requesting rebuild on Github Pages
-  const response = await fetch("https://api.github.com/repos/TypesettingTools/depctrl-browser/dispatches", { 
-    method: "post", 
+  const response = await fetch("https://api.github.com/repos/TypesettingTools/depctrl-browser/dispatches", {
+    method: "post",
     headers: new Headers({
-        "Authorization": "token " + env.GH_API_TOKEN, 
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "DepCtrl Browser Update Trigger on CF Worker"
-    }), 
+      "Authorization": "token " + env.GH_API_TOKEN,
+      "Accept": "application/vnd.github+json",
+      "User-Agent": "DepCtrl Browser Update Trigger on CF Worker"
+    }),
     body: '{"event_type":"feed-update-detected"}'
-});
+  });
   const results = await response.text();
   console.log(results)
 }
@@ -59,7 +67,13 @@ export default {
     // Can't use map due to http request limit?
     var rebuildTriggered = false;
     for (let feed of feeds) {
-      const updateTime = await getLastUpdated(feed);
+      const updateTime = await getLastUpdated(feed)
+        .catch((err) => {
+          console.error(err);
+        });
+      if (updateTime === undefined) {
+        continue;
+      }
       const updated = await updateFeedTime(feed, updateTime, env);
       if (updated && !rebuildTriggered) {
         console.log("Feed changed, requesting rebuild");
