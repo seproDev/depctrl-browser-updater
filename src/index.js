@@ -46,7 +46,7 @@ const updateFeedTime = async (feed, updateTime, env) => {
   return false;
 }
 
-const rebuildSite = async (env) => {
+const rebuildSite = async (env, reason = 'unknown') => {
   // Requesting rebuild on Github Pages
   const response = await fetch("https://api.github.com/repos/TypesettingTools/depctrl-browser/dispatches", {
     method: "post",
@@ -55,7 +55,7 @@ const rebuildSite = async (env) => {
       "Accept": "application/vnd.github+json",
       "User-Agent": "DepCtrl Browser Update Trigger on CF Worker"
     }),
-    body: '{"event_type":"feed-update-detected"}'
+    body: JSON.stringify({ "event_type": "feed-update-detected", "client_payload": { "reason": reason } })
   });
   const results = await response.text();
   console.log(results)
@@ -77,7 +77,7 @@ export default {
       const updated = await updateFeedTime(feed, updateTime, env);
       if (updated && !rebuildTriggered) {
         console.log("Feed changed, requesting rebuild");
-        await rebuildSite(env);
+        await rebuildSite(env, feed);
         rebuildTriggered = true;
       }
     }
