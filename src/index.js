@@ -15,6 +15,8 @@ const feeds = [
   "TypesettingTools/unanimated-Aegisub-Scripts/master",
   "unanimated/luaegisub/master", // not in depctrl, but added by macros
   "Zahuczky/Zahuczkys-Aegisub-Scripts/main",
+  "TypesettingTools/arch1t3cht-Aegisub-Scripts/main",
+  "TypesettingTools/zeref-Aegisub-Scripts/main",
 ];
 
 const getLastUpdated = async (feed) => {
