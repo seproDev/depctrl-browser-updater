@@ -17,6 +17,7 @@ const feeds = [
   "Zahuczky/Zahuczkys-Aegisub-Scripts/main",
   "TypesettingTools/arch1t3cht-Aegisub-Scripts/main",
   "TypesettingTools/zeref-Aegisub-Scripts/main",
+  "TypesettingTools/ILL-Aegisub-Scripts/main"
 ];
 
 const getLastUpdated = async (feed) => {
